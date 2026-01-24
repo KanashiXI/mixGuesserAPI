@@ -1,8 +1,8 @@
 import express from 'express';
-import router from './routes/router.js';
+import router from './src/routes/router.js';
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 4000;
 
 app.use('/api/v1', router);
 
