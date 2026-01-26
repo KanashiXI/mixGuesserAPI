@@ -1,4 +1,5 @@
 import { pool } from "../config/db.js";
+import { v4 as uuidv4 } from "uuid";
 import express from "express";
 
 const app = express();
@@ -12,6 +13,30 @@ const songModel = {
       const query = "SELECT * FROM songs";
       const rows = await conn.query(query);
       return rows;
+    } finally {
+      if (conn) conn.release();
+    }
+  },
+  async addSong(req, res) {
+    let conn;
+    try {
+      console.log("Adding new song with data:", req.body);
+      // const { song_name, song_album, song_release_year, song_length } = req.body;
+      // const song_id = uuidv4(); // Generate a new UUID v4
+
+      // conn = await pool.getConnection();
+
+      // // Update query to include the ID column
+      // const query =
+      //   "INSERT INTO songs (song_id, song_name, song_album, song_release_year, song_length) VALUES (?, ?, ?, ?, ?)";
+      // await conn.query(query, [song_id, song_name, song_album, song_release_year, song_length]);
+
+      // // Return the generated ID along with the data
+      // return { song_id, song_name, song_album, song_release_year, song_length };
+    } catch (error) {
+      // It's good practice to catch errors so your app doesn't crash
+      console.error("Error adding song:", error);
+      throw error;
     } finally {
       if (conn) conn.release();
     }
