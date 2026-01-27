@@ -12,7 +12,7 @@ const songController = {
   },
   addSong: async (req, res) => {
     try {
-      console.log("Controller received request to add song with data:", req.body);
+      // console.log("Controller received request to add song with data:", req.body);
       const newSong = await songModel.addSong(req, res);
       res.status(201).json(newSong);
     } catch (error) {
