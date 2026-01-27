@@ -1,6 +1,6 @@
-import { healthCheckModel } from "../models/healthCheck.model.js";
+import { healthCheckModel } from "./service.js";
 
-const healthChceckController = { 
+const healthCheckController = { 
   getCheckDB: async (req, res) => {
     try {
       await healthCheckModel.dbCheck(req, res);
@@ -11,4 +11,4 @@ const healthChceckController = {
   }
 }
 
-export { healthChceckController };
+export { healthCheckController };

@@ -17,6 +17,36 @@ const songModel = {
       if (conn) conn.release();
     }
   },
+  async getSongsByID(req, res) {
+    let conn;
+    try {
+      const { song_id } = req.params;
+      conn = await pool.getConnection();
+      const query = "SELECT * FROM songs WHERE song_id = ?";
+      const rows = await conn.query(query, [song_id]);
+      return rows;
+    } catch (error) {
+      console.error("Error adding song:", error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  },
+  async getSongsByID(req, res) {
+    let conn;
+    try {
+      const { song_id } = req.params;
+      conn = await pool.getConnection();
+      const query = "SELECT * FROM songs WHERE song_id = ?";
+      const rows = await conn.query(query, [song_id]);
+      return rows;
+    } catch (error) {
+      console.error("Error adding song:", error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  },
   async addSong(req, res) {
     let conn;
     try {
