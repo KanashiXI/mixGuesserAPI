@@ -4,7 +4,7 @@ import express from 'express';
 const app = express()
 app.use(express.json());
 
-const healthCheckSevice = {
+const healthCheckService = {
   async dbCheck (req, res) {
     let conn;
     try {
@@ -29,4 +29,4 @@ const healthCheckSevice = {
   }
 }
 
-export { healthCheckSevice };
+export { healthCheckService };

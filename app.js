@@ -16,6 +16,7 @@ import helmet from 'helmet';
 
 // import routes
 import healthCheckRoute from './src/modules/healthCheck/route.js';
+import songRoute from './src/modules/songs/route.js';
 
 const app = express();
 dotenv.config();
@@ -41,12 +42,15 @@ const corsOpts = {
 
 app.use(cors(corsOpts));
 app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 // routes
 const routes = [
-  [healthCheckRoute]
+  [healthCheckRoute],
+  [songRoute]
 ];
 
 app.use('/api/v1', routes);
