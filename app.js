@@ -14,10 +14,13 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 
 import helmet from 'helmet';
 
+// import routes
 import healthCheckRoute from './src/modules/healthCheck/route.js';
 
 const app = express();
 dotenv.config();
+
+// configure dayjs
 dayjs.locale('th');
 dayjs.extend(relativeTime);
 dayjs.extend(customParseFormat);
@@ -41,8 +44,9 @@ app.use(helmet());
 app.use(express.static('public'));
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
+// routes
 const routes = [
-    [healthCheckRoute]
+  [healthCheckRoute]
 ];
 
 app.use('/api/v1', routes);
