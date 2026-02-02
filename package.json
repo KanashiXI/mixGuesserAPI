@@ -11,13 +11,21 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "imports": {
+    "@/*": "./*"
+  },
   "dependencies": {
+    "body-parser": "^2.2.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
     "mariadb": "^3.4.5",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.16.2",
+    "sequelize": "^6.37.7",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/th.js'
@@ -11,8 +15,6 @@ import isToday from 'dayjs/plugin/isToday.js';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 // import utc from 'dayjs/plugin/utc.js';
 // import timezone from 'dayjs/plugin/timezone.js';
-
-import helmet from 'helmet';
 
 // import routes
 import healthCheckRoute from './src/modules/healthCheck/route.js';
@@ -45,7 +47,14 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+
+app.use(morgan('dev'));
+app.use(cookieParser());
+
+app.use(bodyParser.json({ limit: '25mb' }));
+app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: '25mb' }));
 
 // routes
 const routes = [

@@ -1,4 +1,4 @@
-import { pool } from '../../config/db.js';
+import { checkDatabaseHealth } from '../../config/database.js';
 import express from 'express';
 
 const app = express()
@@ -9,17 +9,17 @@ const healthCheckService = {
     let conn;
     try {
         // Establish a connection
-        conn = await pool.getConnection();
+        // conn = await pool.getConnection();
         
-        // simple query to check if DB is working (returns current time)
-        const rows = await conn.query("SELECT NOW() as now");
+        // // simple query to check if DB is working (returns current time)
+        // const rows = await conn.query("SELECT NOW() as now");
         
-        // Don't forget to release the connection back to the pool!
-        res.json({ 
-            status: 'success', 
-            message: 'Connected to MariaDB!', 
-            time: rows[0].now 
-        });
+        // // Don't forget to release the connection back to the pool!
+        // res.json({ 
+        //     status: 'success', 
+        //     message: 'Connected to MariaDB!', 
+        //     time: rows[0].now 
+        // });
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: 'error', message: err.message });
