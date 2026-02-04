@@ -19,6 +19,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 // import routes
 import healthCheckRoute from './src/modules/healthCheck/route.js';
 import songRoute from './src/modules/songs/route.js';
+import responseFormatter from './src/middleware/responseFormatter.js';
 
 const app = express();
 dotenv.config();
@@ -47,6 +48,9 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+// attach response helpers
+app.use(responseFormatter);
 
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 

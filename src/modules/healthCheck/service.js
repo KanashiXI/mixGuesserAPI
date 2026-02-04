@@ -5,12 +5,12 @@ const healthCheckService = {
     try {
       const result = await checkDatabaseHealth();
       if (result.status === 'UP') {
-        return res.status(200).json({ status: 'UP', message: result.message });
+        return res.sendResponse({ code: 200, status: 'UP', message: result.message });
       }
-      return res.status(503).json({ status: 'DOWN', message: result.message });
+      return res.sendResponse({ code: 503, status: 'DOWN', message: result.message });
     } catch (err) {
       console.error('Health check failed:', err);
-      return res.status(500).json({ status: 'ERROR', message: err.message });
+      return res.sendResponse({ code: 500, status: 'ERROR', message: err.message });
     }
   }
 }
