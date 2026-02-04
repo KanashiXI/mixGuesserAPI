@@ -1,48 +1,142 @@
-import express from 'express';
 import { v4 as uuidv4 } from "uuid";
-
-const app = express()
-app.use(express.json());
+import Songs from "../../models/songsModel.js";
 
 const songsService = {
+  // Get all songs
   async getAllSongs() {
-    let conn;
-    // try {
-    //   conn = await pool.getConnection();
-    //   const query = "SELECT * FROM songs";
-    //   const rows = await conn.query(query);
-    //   return rows;
-    // } catch (err) {
-    //   console.error(err);
-    //   throw err;
-    // } finally {
-    //   if (conn) conn.release();
-    // }
+    try {
+      const songs = await Songs.findAll({
+        attributes: [
+          "song_id",
+          "song_name",
+          "song_album",
+          "song_release_year",
+          "song_length",
+          "is_guess",
+          "created_at",
+          "updated_at",
+          "deleted_at",
+        ],
+        raw: true,
+        order: [["created_at", "DESC"]],
+      });
+      return songs;
+    } catch (error) {
+      console.error("Error fetching songs:", error);
+      throw error;
+    }
   },
-  async addSong(req, res) {
-    let conn;
-    // try {
-    //   // console.log("Adding new song with data:", req.body);
-    //   const { song_name, song_album, song_release_year, song_length } = req.body;
-    //   const song_id = uuidv4(); // Generate a new UUID v4
-    //   const create_at = new Date();
-    //   conn = await pool.getConnection();
 
-    //   // Update query to include the ID column
-    //   const query =
-    //     "INSERT INTO songs (song_id, song_name, song_album, song_release_year, song_length, create_at) VALUES (?, ?, ?, ?, ?, ?)";
-    //   await conn.query(query, [song_id, song_name, song_album, song_release_year, song_length, create_at]);
-
-    //   // Return the generated ID along with the data
-    //   return { song_id, song_name, song_album, song_release_year, song_length, create_at };
-    // } catch (error) {
-    //   // It's good practice to catch errors so your app doesn't crash
-    //   console.error("Error adding song:", error);
-    //   throw error;
-    // } finally {
-    //   if (conn) conn.release();
-    // }
+  // Get a single song by ID
+  async getSongById(song_id) {
+    try {
+      const song = await Songs.findByPk(song_id, {
+        attributes: [
+          "song_id",
+          "song_name",
+          "song_album",
+          "song_release_year",
+          "song_length",
+          "is_guess",
+          "created_at",
+          "updated_at",
+          "deleted_at",
+        ],
+        raw: true,
+      });
+      return song;
+    } catch (error) {
+      console.error("Error fetching song:", error);
+      throw error;
+    }
   },
-}
+
+  // Create a new song
+  async addSong(songData) {
+    try {
+      const { song_name, song_album, song_release_year, song_length, is_guess } =
+        songData;
+      const song_id = uuidv4();
+
+      const newSong = await Songs.create({
+        song_id,
+        song_name,
+        song_album,
+        song_release_year,
+        song_length,
+        is_guess
+      });
+
+      return newSong.toJSON();
+    } catch (error) {
+      console.error("Error adding song:", error);
+      throw error;
+    }
+  },
+
+  // Update a song
+  async updateSong(song_id, songData) {
+    try {
+      const song = await Songs.findByPk(song_id);
+      if (!song) {
+        throw new Error("Song not found");
+      }
+
+      await song.update(songData);
+      return song.toJSON();
+    } catch (error) {
+      console.error("Error updating song:", error);
+      throw error;
+    }
+  },
+
+  // Delete a song
+  async deleteSong(song_id) {
+    try {
+      const song = await Songs.findByPk(song_id);
+      if (!song) {
+        throw new Error("Song not found");
+      }
+
+      await song.destroy();
+      return {
+        song_id,
+        message: "Song deleted successfully",
+        deleted_at: song.deleted_at,
+      };
+    } catch (error) {
+      console.error("Error deleting song:", error);
+      throw error;
+    }
+  },
+
+  // Create multiple songs at once
+  async addBulkSongs(songsData) {
+    try {
+      if (!Array.isArray(songsData) || songsData.length === 0) {
+        throw new Error("Invalid input: expected an array of songs");
+      }
+
+      const newSongs = songsData.map((songData) => {
+        const { song_name, song_album, song_release_year, song_length } =
+          songData;
+        return {
+          song_id: uuidv4(),
+          song_name,
+          song_album,
+          song_release_year,
+          song_length,
+          is_guess: songData.is_guess || 0,
+        };
+      });
+
+      const createdSongs = await Songs.bulkCreate(newSongs);
+      return createdSongs.map((song) => song.toJSON());
+    } catch (error) {
+      console.error("Error adding bulk songs:", error);
+      throw error;
+    }
+  },
+};
 
 export { songsService };

@@ -4,22 +4,126 @@ const songsController = {
   getAllSongs: async (req, res) => {
     try {
       const songs = await songsService.getAllSongs();
-      res.status(200).json(songs);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Songs retrieved successfully",
+        data: songs,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Internal Server Error" });
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
     }
   },
+
+  getSongById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const song = await songsService.getSongById(id);
+      if (!song) {
+        return res.sendResponse({
+          code: 404,
+          status: "error",
+          message: "Song not found",
+        });
+      }
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Song retrieved successfully",
+        data: song,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
+    }
+  },
+
   addSong: async (req, res) => {
     try {
-      console.log("Controller received request to add song with data:", req.body);
-      const newSong = await songsService.addSong(req, res);
-      res.status(201).json(newSong);
+      const newSong = await songsService.addSong(req.body);
+      return res.sendResponse({
+        code: 201,
+        status: "success",
+        message: "Song created successfully",
+        data: newSong,
+      });
     } catch (error) {
-      console.error(error.message);
-      res.status(500).json({ message: "Internal Server Error" });
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
     }
-  }
-}
+  },
+
+  updateSong: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updatedSong = await songsService.updateSong(id, req.body);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Song updated successfully",
+        data: updatedSong,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
+    }
+  },
+
+  deleteSong: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await songsService.deleteSong(id);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Song deleted successfully",
+        data: result,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
+    }
+  },
+
+  addBulkSongs: async (req, res) => {
+    try {
+      const songs = await songsService.addBulkSongs(req.body);
+      return res.sendResponse({
+        code: 201,
+        status: "success",
+        message: `${songs.length} songs created successfully`,
+        data: songs,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: error.message || "Internal Server Error",
+      });
+    }
+  },
+};
 
 export { songsController };
