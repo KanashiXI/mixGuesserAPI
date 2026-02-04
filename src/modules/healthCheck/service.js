@@ -1,30 +1,16 @@
 import { checkDatabaseHealth } from '../../config/database.js';
-import express from 'express';
-
-const app = express()
-app.use(express.json());
 
 const healthCheckService = {
   async dbCheck (req, res) {
-    let conn;
     try {
-        // Establish a connection
-        // conn = await pool.getConnection();
-        
-        // // simple query to check if DB is working (returns current time)
-        // const rows = await conn.query("SELECT NOW() as now");
-        
-        // // Don't forget to release the connection back to the pool!
-        // res.json({ 
-        //     status: 'success', 
-        //     message: 'Connected to MariaDB!', 
-        //     time: rows[0].now 
-        // });
+      const result = await checkDatabaseHealth();
+      if (result.status === 'UP') {
+        return res.status(200).json({ status: 'UP', message: result.message });
+      }
+      return res.status(503).json({ status: 'DOWN', message: result.message });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: 'error', message: err.message });
-    } finally {
-        if (conn) conn.release(); // ALWAYS release connection
+      console.error('Health check failed:', err);
+      return res.status(500).json({ status: 'ERROR', message: err.message });
     }
   }
 }
