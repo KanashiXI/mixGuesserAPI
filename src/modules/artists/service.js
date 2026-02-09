@@ -88,7 +88,8 @@ const artistsService = {
       console.error('Error adding bulk artists:', error);
       throw error;
     }
-  }
+  },
+  
 };
 
 export { artistsService };

@@ -54,7 +54,7 @@ const songsService = {
   // Create a new song
   async addSong(songData) {
     try {
-      const { song_name, song_album, song_release_year, song_length, is_guess } =
+      const { song_name, song_album, song_release_year, song_length, song_artist, is_guess } =
         songData;
       const song_id = uuidv4();
 
@@ -64,6 +64,7 @@ const songsService = {
         song_album,
         song_release_year,
         song_length,
+        song_artist,
         is_guess
       });
 
