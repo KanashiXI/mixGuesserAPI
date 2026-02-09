@@ -36,6 +36,24 @@ const artistsController = {
         message: error.message || 'Internal Server Error',
       });
     }
+  },
+  addBulkArtists: async (req, res) => {
+    try {
+      const newArtists = await artistsService.addBulkArtists(req.body);
+      return res.sendResponse({
+        code: 201,
+        status: 'success',
+        message: 'Bulk artists created successfully',
+        data: newArtists,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: 'error',
+        message: error.message || 'Internal Server Error',
+      });
+    }
   }
 };
 

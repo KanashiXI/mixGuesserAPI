@@ -21,6 +21,14 @@ const Artists = sequelize.define(
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
+    artist_type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    artist_member_number: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     created_at: {
       type: DataTypes.NOW,
       allowNull: true,

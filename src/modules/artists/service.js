@@ -39,6 +39,52 @@ const artistsService = {
       throw error;
     }
   },
+  async addBulkArtists(artistsArray) {
+    try {
+      // Collect incoming names
+      const incomingNames = artistsArray.map((a) => a.artist_name).filter(Boolean);
+
+      // Find existing artists with those names
+      const existing = await Artists.findAll({
+        where: { artist_name: incomingNames },
+        attributes: ['artist_name'],
+        raw: true,
+      });
+
+      const existingNameSet = new Set(existing.map((e) => e.artist_name));
+
+      // Partition into duplicates and to-create
+      const duplicates = [];
+      const toCreate = [];
+      for (const artist of artistsArray) {
+        if (!artist.artist_name) continue;
+        if (existingNameSet.has(artist.artist_name)) {
+          duplicates.push(artist.artist_name);
+        } else {
+          toCreate.push({
+            artist_id: uuidv4(),
+            artist_name: artist.artist_name,
+            // artist_label: artist.artist_label,
+            artist_debut: artist.artist_debut,
+            // artist_type: artist.artist_type,
+            artist_member_number: artist.artist_member_number,
+            created_at: new Date(),
+          });
+        }
+      }
+
+      let newArtists = [];
+      if (toCreate.length > 0) {
+        newArtists = await Artists.bulkCreate(toCreate);
+      }
+
+      // Return both created records and duplicate names so caller can alert
+      return { newArtists, duplicates };
+    } catch (error) {
+      console.error('Error adding bulk artists:', error);
+      throw error;
+    }
+  }
 };
 
 export { artistsService };
