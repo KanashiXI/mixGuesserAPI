@@ -1,25 +1,25 @@
-import Artists from '../../models/artistsModel.js';
-import { v4 as uuidv4 } from 'uuid';
+import Artists from "../../models/artistsModel.js";
+import { v4 as uuidv4 } from "uuid";
 
 const artistsService = {
   async getAllArtists() {
     try {
       const artists = await Artists.findAll({
         attributes: [
-          'artist_id',
-          'artist_name',
-          'artist_label',
-          'artist_debut',
-          'created_at',
-          'updated_at',
-          'deleted_at',
+          "artist_id",
+          "artist_name",
+          "artist_label",
+          "artist_debut",
+          "created_at",
+          "updated_at",
+          "deleted_at",
         ],
         raw: true,
-        order: [['created_at', 'DESC']],
+        order: [["created_at", "DESC"]],
       });
       return artists;
     } catch (error) {
-      console.error('Error fetching artists:', error);
+      console.error("Error fetching artists:", error);
       throw error;
     }
   },
@@ -30,28 +30,30 @@ const artistsService = {
       const newArtist = await Artists.create({
         artist_id,
         artist_name,
-        artist_label ,
+        artist_label,
         artist_debut,
       });
       return newArtist;
     } catch (error) {
-      console.error('Error adding artist:', error);
+      console.error("Error adding artist:", error);
       throw error;
     }
   },
   async addBulkArtists(artistsArray) {
     try {
-      if(!Array.isArray(artistsArray) || artistsArray.length === 0) {
-        throw new Error('Input must be a non-empty array of artists');
+      if (!Array.isArray(artistsArray) || artistsArray.length === 0) {
+        throw new Error("Input must be a non-empty array of artists");
       }
 
       // Collect incoming names
-      const incomingNames = artistsArray.map((a) => a.artist_name).filter(Boolean);
+      const incomingNames = artistsArray
+        .map((a) => a.artist_name)
+        .filter(Boolean);
 
       // Find existing artists with those names
       const existing = await Artists.findAll({
         where: { artist_name: incomingNames },
-        attributes: ['artist_name'],
+        attributes: ["artist_name"],
         raw: true,
       });
 
@@ -86,12 +88,47 @@ const artistsService = {
       // Return both created records and duplicate names so caller can alert
       return { newArtists, duplicates };
     } catch (error) {
-      console.error('Error adding bulk artists:', error);
+      console.error("Error adding bulk artists:", error);
       throw error;
     }
   },
-  
-
+  getArtistById: async (artistId) => {
+    try {
+      const artist = await Artists.findByPk(artistId, {
+        attributes: [
+          "artist_id",
+          "artist_name",
+          "artist_label",
+          "artist_debut",
+          "created_at",
+          "updated_at",
+          "deleted_at",
+        ],
+        raw: true,
+      });
+      return artist;
+    } catch (error) {
+      console.error("Error fetching artist by ID:", error);
+      throw error;
+    }
+  },
+  deleteArtist: async (artistId) => {
+    try {
+      const artist = await Artists.findByPk(artistId);
+      if (!artist) {
+        throw new Error("Artist not found");
+      }
+      await artist.destroy();
+      return {
+        artist_id: artist.artist_id,
+        artist_name: artist.artist_name,
+        deleted_at: artist.deleted_at,
+      };
+    } catch (error) {
+      console.error("Error deleting artist:", error);
+      throw error;
+    }
+  }
 };
 
 export { artistsService };

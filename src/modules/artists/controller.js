@@ -54,6 +54,44 @@ const artistsController = {
         message: error.message || 'Internal Server Error',
       });
     }
+  },
+  updateArtist: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updatedArtist = await artistsService.updateArtist(id, req.body);
+      return res.sendResponse({
+        code: 200,
+        status: 'success',
+        message: 'Artist updated successfully',
+        data: updatedArtist,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: 'error',
+        message: error.message || 'Internal Server Error',
+      });
+    }
+  },
+  deleteArtist: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedArtist = await artistsService.deleteArtist(id);
+      return res.sendResponse({
+        code: 200,
+        status: 'success',
+        message: 'Artist deleted successfully',
+        data: deletedArtist,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.sendResponse({
+        code: 500,
+        status: 'error',
+        message: error.message || 'Internal Server Error',
+      });
+    }
   }
 };
 
