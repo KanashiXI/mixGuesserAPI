@@ -23,6 +23,10 @@ const Songs = sequelize.define("Songs", {
         type: DataTypes.TIME,
         allowNull: false
     },
+    song_artist: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     is_guess: {
         type: DataTypes.TINYINT,
         allowNull: true,
@@ -31,12 +35,12 @@ const Songs = sequelize.define("Songs", {
     created_at: {
         type: DataTypes.NOW,
         allowNull: true,
-        defaultValue: DataTypes.NOW
+        // defaultValue: DataTypes.NOW
     },
     updated_at: {
         type: DataTypes.NOW,
         allowNull: true,
-        defaultValue: DataTypes.NOW
+        // defaultValue: DataTypes.NOW
     },
     deleted_at: {
         type: DataTypes.NOW,

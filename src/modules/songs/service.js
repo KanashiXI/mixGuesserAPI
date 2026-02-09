@@ -111,27 +111,51 @@ const songsService = {
   },
 
   // Create multiple songs at once
-  async addBulkSongs(songsData) {
+  async addBulkSongs(songsArray) {
     try {
-      if (!Array.isArray(songsData) || songsData.length === 0) {
+      if (!Array.isArray(songsArray) || songsArray.length === 0) {
         throw new Error("Invalid input: expected an array of songs");
       }
 
-      const newSongs = songsData.map((songData) => {
-        const { song_name, song_album, song_release_year, song_length } =
-          songData;
-        return {
-          song_id: uuidv4(),
-          song_name,
-          song_album,
-          song_release_year,
-          song_length,
-          is_guess: songData.is_guess || 0,
-        };
+      const incomingNames = songsArray.map((songs) => songs.song_name).filter(Boolean);
+
+      console.log("Incoming song names:", incomingNames);
+
+      const existing = await Songs.findAll({
+        where: { song_name: incomingNames },
+        attributes: ["song_name"],
+        raw: true,
       });
 
-      const createdSongs = await Songs.bulkCreate(newSongs);
-      return createdSongs.map((song) => song.toJSON());
+      const existingNameSet = new Set(existing.map((songs) => songs.song_name));
+      
+      const duplicates = [];
+      const toCreate = [];
+      for (const song of songsArray) {
+        if (!song.song_name) continue;
+        if (existingNameSet.has(song.song_name)) {
+          duplicates.push(song.song_name);
+        } else {
+          toCreate.push({
+            song_id: uuidv4(),
+            song_name: song.song_name,
+            song_album: song.song_album,
+            song_release_year: song.song_release_year,
+            song_length: song.song_length,
+            song_artist: song.song_artist,
+            is_guess: song.is_guess || 0,
+            created_at: new Date(),
+            updated_at: new Date(),
+          });
+        }
+      }
+
+      let newSongs = [];
+      if (toCreate.length > 0) {
+        newSongs = await Songs.bulkCreate(toCreate);
+      }
+
+      return {newSongs, duplicates};
     } catch (error) {
       console.error("Error adding bulk songs:", error);
       throw error;

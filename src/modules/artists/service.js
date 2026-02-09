@@ -41,6 +41,10 @@ const artistsService = {
   },
   async addBulkArtists(artistsArray) {
     try {
+      if(!Array.isArray(artistsArray) || artistsArray.length === 0) {
+        throw new Error('Input must be a non-empty array of artists');
+      }
+
       // Collect incoming names
       const incomingNames = artistsArray.map((a) => a.artist_name).filter(Boolean);
 
