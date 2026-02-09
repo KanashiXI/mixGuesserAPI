@@ -73,6 +73,7 @@ const artistsService = {
             // artist_type: artist.artist_type,
             artist_member_number: artist.artist_member_number,
             created_at: new Date(),
+            updated_at: new Date(),
           });
         }
       }
@@ -90,6 +91,7 @@ const artistsService = {
     }
   },
   
+
 };
 
 export { artistsService };

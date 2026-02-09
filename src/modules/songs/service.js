@@ -65,7 +65,9 @@ const songsService = {
         song_release_year,
         song_length,
         song_artist,
-        is_guess
+        is_guess,
+        created_at: new Date(),
+        updated_at: new Date(),
       });
 
       return newSong.toJSON();
