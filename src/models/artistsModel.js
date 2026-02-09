@@ -13,11 +13,11 @@ const Artists = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    company: {
+    artist_label: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    debut_year: {
+    artist_debut: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },

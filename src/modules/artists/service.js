@@ -8,8 +8,8 @@ const artistsService = {
         attributes: [
           'artist_id',
           'artist_name',
-          'company',
-          'debut_year',
+          'artist_label',
+          'artist_debut',
           'created_at',
           'updated_at',
           'deleted_at',
@@ -25,13 +25,13 @@ const artistsService = {
   },
   async addArtist(artistData) {
     try {
-      const { artist_name, company, debut_year } = artistData;
+      const { artist_name, artist_label, artist_debut } = artistData;
       const artist_id = uuidv4();
       const newArtist = await Artists.create({
         artist_id,
         artist_name,
-        company,
-        debut_year,
+        artist_label ,
+        artist_debut,
       });
       return newArtist;
     } catch (error) {
