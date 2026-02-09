@@ -19,6 +19,8 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 // import routes
 import healthCheckRoute from './src/modules/healthCheck/route.js';
 import songRoute from './src/modules/songs/route.js';
+import artistRoute from './src/modules/artists/route.js';
+
 import responseFormatter from './src/middleware/responseFormatter.js';
 
 const app = express();
@@ -63,7 +65,8 @@ app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: '
 // routes
 const routes = [
   [healthCheckRoute],
-  [songRoute]
+  [songRoute],
+  [artistRoute]
 ];
 
 app.use('/api/v1', routes);
