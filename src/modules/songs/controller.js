@@ -112,7 +112,7 @@ const songsController = {
       return res.sendResponse({
         code: 201,
         status: "success",
-        message: `${songs.length} songs created successfully`,
+        message: `${songs?.newSongs.length} songs created successfully`,
         data: songs,
       });
     } catch (error) {
