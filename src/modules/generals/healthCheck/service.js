@@ -1,4 +1,4 @@
-import { checkDatabaseHealth } from '../../config/database.js';
+import { checkDatabaseHealth } from '../../../config/database.js';
 
 const healthCheckService = {
   async dbCheck (req, res) {

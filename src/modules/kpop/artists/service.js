@@ -1,4 +1,4 @@
-import Artists from "../../models/artistsModel.js";
+import Artists from "../../../models/artistsModel.js";
 import { v4 as uuidv4 } from "uuid";
 
 const artistsService = {

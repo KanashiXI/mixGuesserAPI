@@ -17,9 +17,9 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 // import timezone from 'dayjs/plugin/timezone.js';
 
 // import routes
-import healthCheckRoute from './src/modules/healthCheck/route.js';
-import songRoute from './src/modules/songs/route.js';
-import artistRoute from './src/modules/artists/route.js';
+import healthCheckRoute from './src/modules/generals/healthCheck/route.js';
+import songRoute from './src/modules/kpop/songs/route.js';
+import artistRoute from './src/modules/kpop/artists/route.js';
 
 import responseFormatter from './src/middleware/responseFormatter.js';
 
