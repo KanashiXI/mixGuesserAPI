@@ -18,8 +18,12 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 
 // import routes
 import healthCheckRoute from './src/modules/generals/healthCheck/route.js';
+
+// K-pop
 import songRoute from './src/modules/kpop/songs/route.js';
 import artistRoute from './src/modules/kpop/artists/route.js';
+
+// Character
 import characterRoute from './src/modules/character/character/route.js';
 import charTeamRoute from './src/modules/character/team/route.js';
 
@@ -66,9 +70,14 @@ app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: '
 
 // routes
 const routes = [
+  // general
   [healthCheckRoute],
+  
+  // k-pop
   [songRoute],
   [artistRoute],
+  
+  // Character
   [characterRoute],
   [charTeamRoute],
 ];
