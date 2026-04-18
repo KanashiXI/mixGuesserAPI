@@ -21,6 +21,7 @@ import healthCheckRoute from './src/modules/generals/healthCheck/route.js';
 import songRoute from './src/modules/kpop/songs/route.js';
 import artistRoute from './src/modules/kpop/artists/route.js';
 import characterRoute from './src/modules/character/character/route.js';
+import charTeamRoute from './src/modules/character/team/route.js';
 
 import responseFormatter from './src/middleware/responseFormatter.js';
 
@@ -68,7 +69,8 @@ const routes = [
   [healthCheckRoute],
   [songRoute],
   [artistRoute],
-  [characterRoute]
+  [characterRoute],
+  [charTeamRoute],
 ];
 
 app.use('/api/v1', routes);
