@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import Songs from "../../../models/songsModel.js";
+import Songs from "../../../models/kpop/songsModel.js";
 
 const songsService = {
   // Get all songs

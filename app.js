@@ -20,6 +20,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import healthCheckRoute from './src/modules/generals/healthCheck/route.js';
 import songRoute from './src/modules/kpop/songs/route.js';
 import artistRoute from './src/modules/kpop/artists/route.js';
+import characterRoute from './src/modules/character/character/route.js';
 
 import responseFormatter from './src/middleware/responseFormatter.js';
 
@@ -66,7 +67,8 @@ app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: '
 const routes = [
   [healthCheckRoute],
   [songRoute],
-  [artistRoute]
+  [artistRoute],
+  [characterRoute]
 ];
 
 app.use('/api/v1', routes);
