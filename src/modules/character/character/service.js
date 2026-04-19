@@ -90,6 +90,34 @@ const characterService = {
       console.error("Error creating character:", error);
       throw error;
     }
+  },
+  async editCharacter(id, characterData) {
+    try {
+      const character = await Characters.findByPk(id);
+      if (!character) {
+        throw new Error("Character not found");
+      }
+      await character.update(characterData);
+      return character;
+    }
+    catch (error) {
+      console.error(`Error updating character with id ${id}:`, error);
+      throw error;
+    }
+  },
+  async deleteCharacter(id) {
+    try {
+      const character = await Characters.findByPk(id);
+      if (!character) {
+        throw new Error("Character not found");
+      }
+      await character.destroy();
+      return character;
+    }
+    catch (error) {
+      console.error(`Error deleting character with id ${id}:`, error);
+      throw error;
+    }
   }
 }
 

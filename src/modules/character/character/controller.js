@@ -69,6 +69,48 @@ const characterController = {
         data: [],
       });
     }
+  },
+  editCharacter: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const characterData = req.body;
+      const updatedCharacter = await characterService.editCharacter(id, characterData);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Character updated successfully",
+        data: updatedCharacter,
+      });
+    } catch (error) {
+      console.error(`Error updating character with id ${id}:`, error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: "Failed to update character",
+        data: null,
+      });
+    }
+  },
+  deleteCharacter: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedCharacter = await characterService.deleteCharacter(id);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Character deleted successfully",
+        data: deletedCharacter,
+      });
+    } catch (error) {
+      console.error(`Error deleting character with id ${id}:`, error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: "Failed to delete character",
+        data: null,
+      });
+
+    }
   }
 }
 
