@@ -33,6 +33,12 @@ const characterController = {
           data: null,
         });
       }
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Character retrieved successfully",
+        data: character,
+      })
     }
     catch (error) {
       console.error(`Error fetching character with id ${id}:`, error);
@@ -41,6 +47,26 @@ const characterController = {
         status: "error",
         message: "Failed to retrieve character",
         data: null,
+      });
+    }
+  },
+  addBulkCharacter: async (req, res) => {
+    try {
+      const characterData = req.body;
+      const newCharacters = await characterService.addBulkCharacter(characterData);
+      return res.sendResponse({
+        code: 201,
+        status: "success",
+        message: "Characters created successfully",
+        data: newCharacters,
+      });
+    } catch (error) {
+      console.error("Error creating characters:", error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: "Failed to create characters",
+        data: [],
       });
     }
   }

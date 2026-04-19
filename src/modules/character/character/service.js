@@ -12,7 +12,7 @@ const characterService = {
           "weapon",
         ],
         raw: true,
-        order: [["created_at", "DESC"]],
+        order: [["char_id", "ASC"]],
       });
       return characters;
     } catch (error) {
@@ -30,6 +30,8 @@ const characterService = {
           "sex",
           "team",
           "weapon",
+          "model",
+          "guess_type"
         ],
         raw: true,
       });
@@ -60,7 +62,8 @@ const characterService = {
             sex: char.sex,
             team: char.team,
             weapon: char.weapon,
-            guess_type: char.guess_type
+            model: char.model,
+            guess_type: char.guess_type,
           })
         } else {
           existingCharacters.push(char.char_name);
