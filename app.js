@@ -26,6 +26,7 @@ import artistRoute from './src/modules/kpop/artists/route.js';
 // Character
 import characterRoute from './src/modules/character/character/route.js';
 import charTeamRoute from './src/modules/character/team/route.js';
+import charWeaponsRoute from './src/modules/character/weapon/route.js';
 
 import responseFormatter from './src/middleware/responseFormatter.js';
 
@@ -80,6 +81,7 @@ const routes = [
   // Character
   [characterRoute],
   [charTeamRoute],
+  [charWeaponsRoute]
 ];
 
 app.use('/api/v1', routes);
