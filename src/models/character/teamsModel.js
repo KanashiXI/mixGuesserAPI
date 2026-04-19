@@ -13,6 +13,10 @@ const CharTeams = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    guess_type: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     created_at: {
       type: DataTypes.NOW,
       allowNull: true,

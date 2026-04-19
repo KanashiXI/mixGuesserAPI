@@ -37,7 +37,7 @@ const charTeamController = {
       console.error("Error creating character teams:", error);
       
       // Return 400 for validation errors
-      if (error.message.includes("Input atleast one team")) {
+      if (error.message.includes("atleast one")) {
         return res.sendResponse({
           code: 400,
           status: "error",

@@ -32,7 +32,10 @@ const charTeamService = {
       const existingTeams = [];
       for (const name of charTeamData) {
         if (!existingNames.has(name.char_team_name)) {
-          newTeams.push({ char_team_name: name.char_team_name });
+          newTeams.push({ 
+            char_team_name: name.char_team_name,
+            guess_type: name.guess_type
+          });
         } else {
           existingTeams.push(name.char_team_name);
         }
