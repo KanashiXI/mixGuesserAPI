@@ -75,7 +75,7 @@ const characterService = {
 
       let newCharacterNames = [];
       if (newCharacters.length > 0) {
-        newCharacterNames = await Characters.bulkCreate(newCharacters);
+        newCharacterNames = await CharactersModel.bulkCreate(newCharacters);
       }
 
       return {
