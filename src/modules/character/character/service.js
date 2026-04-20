@@ -139,7 +139,7 @@ const characterService = {
           "char_name",
         ],
         limit: 5,
-        order: [['name', 'ASC']],
+        order: [['char_name', 'ASC']],
         raw: true,
       });
       return characters;
