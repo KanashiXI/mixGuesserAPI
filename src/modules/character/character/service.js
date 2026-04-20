@@ -65,6 +65,7 @@ const characterService = {
             weapon: char.weapon,
             model: char.model,
             guess_type: char.guess_type,
+            element: char.element,
           })
         } else {
           existingCharacters.push(char.char_name);
