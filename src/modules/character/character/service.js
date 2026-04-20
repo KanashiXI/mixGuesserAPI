@@ -1,9 +1,10 @@
-import Characters from "../../../models/character/charactersModel.js";
+import Sequelize from "sequelize";
+import CharactersModel from "../../../models/character/charactersModel.js";
 
 const characterService = {
   async getAllCharacters() {
     try {
-      const characters = await Characters.findAll({
+      const characters = await CharactersModel.findAll({
         attributes: [
           "char_id",
           "char_name",
@@ -93,7 +94,7 @@ const characterService = {
   },
   async editCharacter(id, characterData) {
     try {
-      const character = await Characters.findByPk(id);
+      const character = await CharactersModel.findByPk(id);
       if (!character) {
         throw new Error("Character not found");
       }
@@ -107,7 +108,7 @@ const characterService = {
   },
   async deleteCharacter(id) {
     try {
-      const character = await Characters.findByPk(id);
+      const character = await CharactersModel.findByPk(id);
       if (!character) {
         throw new Error("Character not found");
       }
@@ -116,6 +117,32 @@ const characterService = {
     }
     catch (error) {
       console.error(`Error deleting character with id ${id}:`, error);
+      throw error;
+    }
+  },
+  async searchCharactersByName(name) {
+    try {
+      if (!name || name.trim() === "") {
+        throw new Error("Search at least one character");
+      }
+
+      const characters = await CharactersModel.findAll({
+        where: {
+          char_name: {
+            [Sequelize.Op.like]: `%${name}%`
+          }
+        },
+        attributes: [
+          "char_id",
+          "char_name",
+        ],
+        limit: 5,
+        order: [['name', 'ASC']],
+        raw: true,
+      });
+      return characters;
+    } catch (error) {
+      console.error(`Error searching characters by name ${name}:`, error);
       throw error;
     }
   }

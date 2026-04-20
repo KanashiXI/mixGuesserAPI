@@ -8,5 +8,6 @@ router.get('/character/:id', characterController.getCharacterById);
 router.post('/characters', characterController.addBulkCharacter);
 router.put('/character/:id', characterController.editCharacter);
 router.delete('/character/:id', characterController.deleteCharacter);
+router.get('/characters/search', characterController.searchCharactersByName);
 
 export default router;

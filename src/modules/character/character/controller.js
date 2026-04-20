@@ -111,6 +111,35 @@ const characterController = {
       });
 
     }
+  },
+  searchCharactersByName: async (req, res) => {
+    try {
+      console.log(req.query);
+      const { name } = req.query;
+      const characters = await characterService.searchCharactersByName(name);
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Characters retrieved successfully",
+        data: characters,
+      });
+    } catch (error) {
+      console.error(`Error searching characters by name ${name}:`, error);
+      if (error.message === "Search at least one character") {
+        return res.sendResponse({
+          code: 400,
+          status: "error",
+          message: error.message,
+          data: [],
+        });
+      }
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: "Failed to search characters",
+        data: [],
+      });
+    }
   }
 }
 
