@@ -33,6 +33,14 @@ const Characters = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    element: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    star: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     created_at: {
       type: DataTypes.NOW,
       allowNull: true,
