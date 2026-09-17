@@ -21,6 +21,26 @@ const characterController = {
 
     }
   },
+  getCharactersList: async (req, res) => {
+    try {
+      const { pageIndex, pageSize } = req.body;
+      const characters = await characterService.getCharactersList({ pageIndex, pageSize });
+      return res.sendResponse({
+        code: 200,
+        status: "success",
+        message: "Characters retrieved successfully",
+        data: characters,
+      });
+    } catch (error) {
+      console.error("Error fetching characters:", error);
+      return res.sendResponse({
+        code: 500,
+        status: "error",
+        message: "Failed to retrieve characters",
+        data: [],
+      });
+    }
+  },
   getCharacterById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -114,7 +134,6 @@ const characterController = {
   },
   searchCharactersByName: async (req, res) => {
     try {
-      console.log(req.body);
       const { name } = req.body;
       const characters = await characterService.searchCharactersByName(name);
       return res.sendResponse({

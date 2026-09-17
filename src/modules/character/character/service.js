@@ -21,6 +21,33 @@ const characterService = {
       throw error;
     }
   },
+  async getCharactersList({ pageIndex, pageSize }) {
+    try {
+      const offset = (pageIndex - 1) * pageSize;
+      const limit = pageSize;
+
+      const { count, rows } = await CharactersModel.findAndCountAll({
+        attributes: [
+          "char_id",
+          "char_name",
+          "sex",
+          "team",
+          "weapon",
+        ],
+        offset,
+        limit,
+        order: [["char_name", "ASC"]],
+      });
+
+      return {
+        totalCount: count,
+        characters: rows,
+      };
+    } catch (error) {
+      console.error("Error fetching characters list:", error);
+      throw error;
+    }
+  },
   async getCharacterById(id) {
     try {
       const character = await Characters.findOne({
