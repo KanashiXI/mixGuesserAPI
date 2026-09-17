@@ -114,8 +114,8 @@ const characterController = {
   },
   searchCharactersByName: async (req, res) => {
     try {
-      console.log(req.query);
-      const { name } = req.query;
+      console.log(req.body);
+      const { name } = req.body;
       const characters = await characterService.searchCharactersByName(name);
       return res.sendResponse({
         code: 200,
