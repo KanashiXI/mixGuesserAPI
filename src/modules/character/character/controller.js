@@ -24,6 +24,14 @@ const characterController = {
   getCharactersList: async (req, res) => {
     try {
       const { pageIndex, pageSize } = req.body;
+      if (!pageIndex || !pageSize) {
+        return res.sendResponse({
+          code: 400,
+          status: "error",
+          message: "pageIndex and pageSize are required",
+          data: [],
+        });
+      }
       const characters = await characterService.getCharactersList({ pageIndex, pageSize });
       return res.sendResponse({
         code: 200,
@@ -134,7 +142,7 @@ const characterController = {
   },
   searchCharactersByName: async (req, res) => {
     try {
-      const { name } = req.body;
+      const { name } = req.params;
       const characters = await characterService.searchCharactersByName(name);
       return res.sendResponse({
         code: 200,
