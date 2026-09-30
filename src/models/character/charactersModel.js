@@ -17,15 +17,15 @@ const Characters = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    team: {
+    char_team: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    weapon: {
+    char_weapon: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    model: {
+    char_model: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
@@ -33,11 +33,11 @@ const Characters = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    element: {
+    char_element: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    star: {
+    char_star: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
