@@ -38,8 +38,8 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const swaggerOptions = {
-  swaggerDefinition: {
-    myapi: '3.0.0',
+  definition: {
+    openapi: '3.0.0',
     info: {
       title: 'MixGuesser API',
       version: '1.0.0',
@@ -47,11 +47,11 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 3000}`,
+        url: `http://localhost:${process.env.PORT || 3000}/api/v1`,
       },
     ],
   },
-  apis: ['./routes/*.js'], // files containing annotations as above
+  apis: ['./src/routes/swagger.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
