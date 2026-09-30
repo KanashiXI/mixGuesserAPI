@@ -6,6 +6,9 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 import dayjs from 'dayjs';
 import 'dayjs/locale/th.js'
 import relativeTime from 'dayjs/plugin/relativeTime.js';
@@ -32,6 +35,27 @@ import responseFormatter from './src/middleware/responseFormatter.js';
 
 const app = express();
 dotenv.config();
+const PORT = process.env.PORT || 3000;
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    myapi: '3.0.0',
+    info: {
+      title: 'MixGuesser API',
+      version: '1.0.0',
+      description: 'API documentation',
+    },
+    servers: [
+      {
+        url: `http://localhost:${process.env.PORT || 3000}`,
+      },
+    ],
+  },
+  apis: ['./routes/*.js'], // files containing annotations as above
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // configure dayjs
 dayjs.locale('th');
