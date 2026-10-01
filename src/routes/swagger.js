@@ -1,20 +1,12 @@
 /**
  * @swagger
  * tags:
- *   - name: Health
  *   - name: Songs
  *   - name: Artists
  *   - name: Characters
  *   - name: Character Teams
  *   - name: Character Weapons
  * paths:
- *   /health/db:
- *     get:
- *       tags: [Health]
- *       summary: Check database connectivity
- *       responses:
- *         '200':
- *           description: Database health status
  *   /songs:
  *     get:
  *       tags: [Songs]
